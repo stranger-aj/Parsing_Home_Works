@@ -18,7 +18,7 @@ if os.path.exists(dotenv_path):
 # Конечная точка API
 endpoint = "https://api.foursquare.com/v3/places/search"
 
-# Определение параметров для запроса API
+# Определение параметров для запроса
 city = input("Введите название города: ")
 category = input("Введите название категории: ")
 params = {
