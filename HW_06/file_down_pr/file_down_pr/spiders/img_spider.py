@@ -19,7 +19,7 @@ class ImgSpiderSpider(scrapy.Spider):
     allowed_domains = ["unsplash.com"]
     # start_urls = ["https://unsplash.com"]
 
-    # получение адреса стартовой станицы
+    # получение адреса стартовой станицы (query вводится пользователем как тема для поиска)
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.start_urls = [f"https://unsplash.com/s/photos/{kwargs.get('query')}"]
@@ -30,7 +30,10 @@ class ImgSpiderSpider(scrapy.Spider):
         links = response.xpath("//div[@class='JM3zT']/a/@href")
         # print(*links, sep='\n')
         for link in links:
-            yield response.follow(link, callback=self.parse_img)
+            try:
+                yield response.follow(link, callback=self.parse_img)
+            except:
+                continue
 
     # получение полей элемента
     def parse_img(self, response: HtmlResponse):
